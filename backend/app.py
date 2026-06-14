@@ -37,15 +37,38 @@ def create_app():
     def health():
         return jsonify({'status': 'ok', 'app': 'Risk Assessment Tool', 'version': '1.0.0'})
 
+    # Debug route — shows DB connection status (remove in production later)
+    @app.route('/api/debug')
+    def debug():
+        import os
+        db_url = os.environ.get('DATABASE_URL', 'NOT SET')
+        # Mask password in output
+        masked = db_url[:30] + '***' + db_url[-20:] if len(db_url) > 50 else db_url
+        result = {'db_url_masked': masked, 'db_connected': False, 'error': None}
+        try:
+            with app.app_context():
+                db.engine.connect()
+            result['db_connected'] = True
+        except Exception as e:
+            result['error'] = str(e)
+        return jsonify(result)
+
     # Create database tables and seed demo user
-    with app.app_context():
-        db.create_all()
-        from models import User
-        if not User.query.filter_by(email='demo@srapp.dev').first():
-            demo = User(name='Demo User', email='demo@srapp.dev', role='project_manager')
-            demo.set_password('demo1234')
-            db.session.add(demo)
-            db.session.commit()
+    # Wrapped in try/except so DB connection failures don't crash the
+    # Vercel serverless function on cold start.
+    # Tables are created by supabase/schema.sql; this is just a safety net.
+    try:
+        with app.app_context():
+            db.create_all()
+            from models import User
+            if not User.query.filter_by(email='demo@srapp.dev').first():
+                demo = User(name='Demo User', email='demo@srapp.dev', role='project_manager')
+                demo.set_password('demo1234')
+                db.session.add(demo)
+                db.session.commit()
+    except Exception as e:
+        import logging
+        logging.warning(f"DB initialization skipped: {e}")
 
     return app
 

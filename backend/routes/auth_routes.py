@@ -23,8 +23,14 @@ def register():
     )
     user.set_password(data['password'])
     
-    db.session.add(user)
-    db.session.commit()
+    try:
+        db.session.add(user)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        import logging
+        logging.error(f"Registration DB error: {e}")
+        return jsonify({'error': f'Database error: {str(e)}'}), 500
 
     token = create_access_token(identity=str(user.id))
     return jsonify({
