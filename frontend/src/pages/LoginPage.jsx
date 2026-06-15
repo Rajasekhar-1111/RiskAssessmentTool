@@ -35,12 +35,8 @@ export default function LoginPage() {
           <div className="auth-logo-icon">🛡️</div>
 
           <h1 className="auth-title">
-            Welcome Back Jenkins Auto Deploy SUCCESS  🚀
+            Welcome Back 
           </h1>
-
-          <p className="auth-subtitle">
-            Auto Deployed by Jenkins on June 2026 ✅
-          </p>
 
           <div
             style={{
@@ -51,7 +47,6 @@ export default function LoginPage() {
               fontSize: '18px',
             }}
           >
-            🚀 Jenkins Auto Deployment Successful
           </div>
         </div>
 
