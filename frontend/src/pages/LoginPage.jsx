@@ -5,6 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -14,23 +15,44 @@ export default function LoginPage() {
     e.preventDefault();
     setError('');
     setLoading(true);
+
     try {
       await login(email, password);
       navigate('/');
     } catch (err) {
       setError(err.response?.data?.error || 'Login failed');
     }
+
     setLoading(false);
   };
 
   return (
     <div className="auth-container">
       <div className="app-bg"></div>
+
       <div className="auth-card slide-up">
         <div className="auth-logo">
           <div className="auth-logo-icon">🛡️</div>
-          <h1 className="auth-title">Welcome Back - Jenkins Auto Deploy Test ✅</h1>
-          <p className="auth-subtitle">Sign in to your Risk Assessment dashboard</p>
+
+          <h1 className="auth-title">
+            Welcome Back - CI/CD Pipeline Triggered Successfully 🚀
+          </h1>
+
+          <p className="auth-subtitle">
+            Auto Deployed by Jenkins on June 2026 ✅
+          </p>
+
+          <div
+            style={{
+              color: '#00ff88',
+              textAlign: 'center',
+              marginBottom: '15px',
+              fontWeight: 'bold',
+              fontSize: '18px',
+            }}
+          >
+            🚀 Jenkins Auto Deployment Successful
+          </div>
         </div>
 
         {error && <div className="error-message">{error}</div>}
@@ -47,6 +69,7 @@ export default function LoginPage() {
               required
             />
           </div>
+
           <div className="form-group">
             <label className="form-label">Password</label>
             <input
@@ -58,7 +81,13 @@ export default function LoginPage() {
               required
             />
           </div>
-          <button type="submit" className="btn btn-primary btn-lg" style={{ width: '100%' }} disabled={loading}>
+
+          <button
+            type="submit"
+            className="btn btn-primary btn-lg"
+            style={{ width: '100%' }}
+            disabled={loading}
+          >
             {loading ? 'Signing in...' : '🔐 Sign In'}
           </button>
         </form>
