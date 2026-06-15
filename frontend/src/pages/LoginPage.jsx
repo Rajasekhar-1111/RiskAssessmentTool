@@ -35,7 +35,7 @@ export default function LoginPage() {
           <div className="auth-logo-icon">🛡️</div>
 
           <h1 className="auth-title">
-            Welcome Back - CI/CD Pipeline Triggered Successfully 🚀
+            Welcome Back Jenkins Auto Deploy SUCCESS  🚀
           </h1>
 
           <p className="auth-subtitle">
