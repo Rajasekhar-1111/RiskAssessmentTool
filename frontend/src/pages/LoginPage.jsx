@@ -29,7 +29,7 @@ export default function LoginPage() {
       <div className="auth-card slide-up">
         <div className="auth-logo">
           <div className="auth-logo-icon">🛡️</div>
-          <h1 className="auth-title">Welcome Back</h1>
+          <h1 className="auth-title">Welcome Back Rajasekhar</h1>
           <p className="auth-subtitle">Sign in to your Risk Assessment dashboard</p>
         </div>
 
