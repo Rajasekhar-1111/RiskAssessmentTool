@@ -5,7 +5,6 @@ import { useNavigate, Link } from 'react-router-dom';
 export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -15,39 +14,23 @@ export default function LoginPage() {
     e.preventDefault();
     setError('');
     setLoading(true);
-
     try {
       await login(email, password);
       navigate('/');
     } catch (err) {
       setError(err.response?.data?.error || 'Login failed');
     }
-
     setLoading(false);
   };
 
   return (
     <div className="auth-container">
       <div className="app-bg"></div>
-
       <div className="auth-card slide-up">
         <div className="auth-logo">
           <div className="auth-logo-icon">🛡️</div>
-
-          <h1 className="auth-title">
-            Welcome Back 
-          </h1>
-
-          <div
-            style={{
-              color: '#00ff88',
-              textAlign: 'center',
-              marginBottom: '15px',
-              fontWeight: 'bold',
-              fontSize: '18px',
-            }}
-          >
-          </div>
+          <h1 className="auth-title">Welcome Back</h1>
+          <p className="auth-subtitle">Sign in to your Risk Assessment dashboard</p>
         </div>
 
         {error && <div className="error-message">{error}</div>}
